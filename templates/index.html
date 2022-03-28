@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+    <head><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></head>
+    <body>
+        <div class="container">
+            <h1 style="font-family:arial">Search Rental Options</h1>
+            <h2 style="font-family:arial">Upload a Pic</h2>
+            <form method="POST" enctype="multipart/form-data">
+                <input type="file" name="query_img"><br>
+                <input type="submit">
+            </form>
+            <br>
+            <br>
+            <h2 style="font-family:arial">Or Try a Sample Search</h2>
+            <div class="row">
+                <div class="column" style="float: left; margin-right: 60px; margin-bottom: 20px;">
+                  <img src="https://m.media-amazon.com/images/I/81TPI6MAXsL._AC_SR255,340_.jpg" style="width:300px; height:350px">
+                  <form method="POST">
+                    <input type="hidden" name="query_img_url0" value="https://m.media-amazon.com/images/I/81TPI6MAXsL._AC_SR255,340_.jpg"><br>
+                    <input type="submit" style="width:300px" value="Search">
+                </form>
+                </div>
+                <div class="column" style="float: left; margin-right: 60px; margin-bottom: 20px;">
+                  <img src="https://m.media-amazon.com/images/I/71WFiP03UDL._AC_SR255,340_.jpg" style="width:300px; height:350px">
+                  <form method="POST">
+                        <input type="hidden" name="query_img_url1" value="https://m.media-amazon.com/images/I/71WFiP03UDL._AC_SR255,340_.jpg"><br>
+                        <input type="submit" style="width:300px" value="Search">
+                    </form>
+                </div>
+                <div class="column" style="float: left; margin-right: 60px; margin-bottom: 20px;">
+                  <img src="https://m.media-amazon.com/images/I/61KMBZh2UqL._UY679_.jpg" style="width:300px; height:350px">
+                  <form method="POST">
+                    <input type="hidden" name="query_img_url2" value="https://m.media-amazon.com/images/I/61KMBZh2UqL._UY679_.jpg"><br>
+                    <input type="submit" style="width:300px" value="Search">
+                </form>
+                </div>
+              </div>
+            <h2 style="font-family:arial">Searching For:</h2>
+            {% if query_path %}
+            <img src="{{ query_path }}" height="300px">
+            {% endif %}
+            <h2 style="font-family:arial">Results:</h2>
+            {% for score, info, cost in scores %}
+            <figure style="float: left; margin-right: 40px; margin-bottom: 20px;">
+                <img src = {{ score[1] }} height="300px">
+                <figcaption>Confidence: {{ score[0] }}%</figcaption>
+                <p>Available in {{info}}</p>
+                <p>Cost: {{cost}}</p>
+                <button style="width: 100%">RENT</button>
+            </figure>
+            {% endfor %}
+        </div>
+    </body>
+</html>
+
+
