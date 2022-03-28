@@ -39,7 +39,7 @@ class FeatureExtractor(nn.Module):
     def __init__(self):
         super(FeatureExtractor, self).__init__()
         self.model = models.vgg16(pretrained=False)
-        self.model.load_state_dict(torch.load('vgg16_weights'))
+        self.model.load_state_dict(torch.load('../vgg16_weights'))
         self.feature_extractor = nn.Sequential(
             self.model.features,
             self.model.avgpool,
