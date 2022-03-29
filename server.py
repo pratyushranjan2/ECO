@@ -27,27 +27,37 @@ with open('nike_men_hoodie_features.pkl', 'rb') as f:
     nike_men_hoodie_features = pickle.load(f)
 
 
-def getScores(img_url, hoodie):
+def getScores(img_url):
     response = requests.get(img_url)
     img = Image.open(BytesIO(response.content))
     uploaded_img_path = "static/uploaded/" + datetime.now().isoformat().replace(":", ".") + "_" + 'sample.jpg'
     img.save(uploaded_img_path)
 
-    if hoodie:
-        features = nike_men_hoodie_features
-        img_tensor = Read_Img_2_Tensor(uploaded_img_path)
-        img_crop = Detect_Clothes_and_Crop(img_tensor, model)
-        Save_Image(img_crop, uploaded_img_path)
-        img = Image.open(uploaded_img_path)
+    # if hoodie:
+    #     features = nike_men_hoodie_features
+    #     img_tensor = Read_Img_2_Tensor(uploaded_img_path)
+    #     img_crop = Detect_Clothes_and_Crop(img_tensor, model)
+    #     Save_Image(img_crop, uploaded_img_path)
+    #     img = Image.open(uploaded_img_path)
     
+    # else:
+    #     features = footwear_features
+
+    img_tensor = Read_Img_2_Tensor(uploaded_img_path)
+    img_crop, detected = Detect_Clothes_and_Crop(img_tensor, model)
+    
+    if detected:
+        features = nike_men_hoodie_features
+        Save_Image(img_crop, uploaded_img_path)
     else:
         features = footwear_features
     
+    img = Image.open(uploaded_img_path)
     
     with torch.no_grad():
         target_vector = fe(img=img)[0] 
         scores = {}
-
+        
         for path, vector in zip(features.keys(), features.values()):
             scores[path] = f'{nn.CosineSimilarity(dim=0)(target_vector, vector).item()*100: .2f}'
 
@@ -59,7 +69,7 @@ def getScores(img_url, hoodie):
 def searchByUrl():
     url = request.args.get('url')
     if (url is not None):
-        scores, uploaded_img_path = getScores(url, True)
+        scores, uploaded_img_path = getScores(url)
         return render_template('card2.html',
                                query_path=uploaded_img_path,
                                scores=zip(scores, meta_hoodie, costs))
@@ -82,7 +92,7 @@ def index():
             img_url = vals[2]
             hoodie = True
 
-        scores, uploaded_img_path = getScores(img_url, hoodie)
+        scores, uploaded_img_path = getScores(img_url)
         meta = meta_hoodie if hoodie else meta_footwear
 
         return render_template('card2.html',

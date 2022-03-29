@@ -47,7 +47,7 @@
       transform: translate(0px, -8px);
       transition: .6s;
       }
-      img{
+      .cardimg{
       width: 200px;
       height: 300px;
       text-align: center;
@@ -121,7 +121,9 @@
   <body>
     <h2 style="font-family:arial; text-align: center;">Searching For:</h2>
       {% if query_path %}
-      <img src="{{ query_path }}" height="300px">
+      <div style="text-align: center;">
+        <img src="{{ query_path }}" style="height: 200px;">
+      </div>
       {% endif %}
       <br/>
       <br/>
@@ -130,7 +132,7 @@
       <div class="gallery">
         {% for score, info, cost in scores %}
         <div class="content">
-          <img src={{score[1]}}>
+          <img class="cardimg" src={{score[1]}}>
           <!-- <h3>Shoes</h3> -->
           <p>{{info}}</p>
           <h6>{{cost}}</h6>

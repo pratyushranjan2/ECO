@@ -46,6 +46,9 @@ def Detect_Clothes_and_Crop(img_tensor, model, threshold=0.5):
     list_obj = Detect_Clothes(img_tensor, model)
 
     img = np.squeeze(img_tensor.numpy())
+    if len(list_obj) == 0:
+        return (img, False)
+    
     img_width = img.shape[1]
     img_height = img.shape[0]
 
@@ -56,7 +59,7 @@ def Detect_Clothes_and_Crop(img_tensor, model, threshold=0.5):
 
     obj = list_obj[0]
     img_crop = img[int(obj['y1']*img_height):int(obj['y2']*img_height), int(obj['x1']*img_width):int(obj['x2']*img_width), :]
-    return img_crop
+    return (img_crop, True)
 
 if __name__ == '__main__':
     img = Read_Img_2_Tensor('./images/test6.jpg')
