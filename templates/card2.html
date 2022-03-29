@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Responsive Ecommerce Product Cards In HTML/CSS</title>
+    <title>Find Rental Solutions</title>
     <h1 style="font-family: Arial, Helvetica, sans-serif; text-align: center;">FIND RENTING SOLUTIONS</h1>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -119,10 +119,37 @@
     </style>
   </head>
   <body>
-    <div class="gallery">
+    <h2 style="font-family:arial; text-align: center;">Searching For:</h2>
+      {% if query_path %}
+      <img src="{{ query_path }}" height="300px">
+      {% endif %}
+      <br/>
+      <br/>
+      <br/>
+      <h2 style="font-family:arial; text-align: center;">Results:</h2>
+      <div class="gallery">
+        {% for score, info, cost in scores %}
+        <div class="content">
+          <img src={{score[1]}}>
+          <!-- <h3>Shoes</h3> -->
+          <p>{{info}}</p>
+          <h6>{{cost}}</h6>
+          <ul>
+            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+          </ul>
+          <button class="buy-3">Rent Now</button>
+        </div>
+        {% endfor %}
+      </div>
+        
+    <!-- <div class="gallery">
       <div class="content">
         <img src="../static/img/test.jpeg">
-        <!-- <h3>Shoes</h3> -->
+        <h3>Shoes</h3>
         <p>S M L</p>
         <h6>$100.00</h6>
         <ul>
@@ -136,7 +163,7 @@
       </div>
       <div class="content">
         <img src="../static/img/test.jpeg">
-        <!-- <h3>Earphone</h3> -->
+        <h3>Earphone</h3>
         <p>M</p>
         <h6>$40.00</h6>
         <ul>
@@ -150,7 +177,7 @@
       </div>
       <div class="content">
         <img src="../static/img/test.jpeg">
-        <!-- <h3>Watch</h3> -->
+        <h3>Watch</h3>
         <p>XS S M L XL</p>
         <h6>$70.84</h6>
         <ul>
@@ -164,7 +191,7 @@
       </div>
       <div class="content">
         <img src="../static/img/test.jpeg">
-        <!-- <h3>Watch</h3> -->
+        <h3>Watch</h3>
         <p>XS S M L XL</p>
         <h6>$70.84</h6>
         <ul>
@@ -176,6 +203,6 @@
         </ul>
         <button class="buy-3">Buy Now</button>
       </div>
-    </div>
+    </div> -->
   </body>
 </html>

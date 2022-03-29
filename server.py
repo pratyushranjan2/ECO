@@ -60,12 +60,12 @@ def searchByUrl():
     url = request.args.get('url')
     if (url is not None):
         scores, uploaded_img_path = getScores(url, True)
-        return render_template('index.html',
+        return render_template('card2.html',
                                query_path=uploaded_img_path,
                                scores=zip(scores, meta_hoodie, costs))
     else:
         print('url not received')
-        return render_template('index.html')
+        return render_template('card2.html')
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -85,13 +85,13 @@ def index():
         scores, uploaded_img_path = getScores(img_url, hoodie)
         meta = meta_hoodie if hoodie else meta_footwear
 
-        return render_template('index.html',
+        return render_template('card2.html',
                                query_path=uploaded_img_path,
                                scores=zip(scores, meta, costs)
                                )
 
     else:
-        return render_template('index.html')
+        return render_template('card2.html')
 
 
 if __name__=="__main__":
