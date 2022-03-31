@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('card2.html')
+    return render_template('card3.html')
 
 if __name__=="__main__":
     app.run("0.0.0.0")
