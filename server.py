@@ -1,16 +1,16 @@
 from time import sleep
 from PIL import Image
-from feature_extractor import FeatureExtractor
+# from feature_extractor import FeatureExtractor
 from datetime import datetime
 from flask import Flask, request, render_template
-import pickle
-import torch
-import torch.nn as nn
-import requests
-from io import BytesIO
-import cv2
-from detection.cloth_detection import Detect_Clothes_and_Crop
-from detection.utils_my import Read_Img_2_Tensor, Save_Image, Load_DeepFashion2_Yolov3
+# import pickle
+# import torch
+# import torch.nn as nn
+# import requests
+# from io import BytesIO
+# import cv2
+# from detection.cloth_detection import Detect_Clothes_and_Crop
+# from detection.utils_my import Read_Img_2_Tensor, Save_Image, Load_DeepFashion2_Yolov3
 
 app = Flask(__name__)
 
@@ -25,11 +25,12 @@ meta_footwear = ['6 7 8 9 10', '8 9 10', '6 7 8', '8', '6 10', '11']
 location = ['Phase-1 Electronic City Bangalore', 'HSR Layout Bangalore', 'Chandapura Bangalore', 'Kormangala Bangalore', 'BTM Layout Bangalore', 'Venkatapura Bangalore']
 costs = ['\u20B9 300','\u20B9 400','\u20B9 350','\u20B9 450','\u20B9 250','\u20B9 300',]
 rating = [4, 5, 4, 3, 4, 4]
+names = ['adya', 'divya', 'ira', 'leena']
 
-with open('footwear_features.pkl', 'rb') as f:
-    footwear_features = pickle.load(f)
-with open('nike_men_hoodie_features.pkl', 'rb') as f:
-    nike_men_hoodie_features = pickle.load(f)
+# with open('footwear_features.pkl', 'rb') as f:
+#     footwear_features = pickle.load(f)
+# with open('nike_men_hoodie_features.pkl', 'rb') as f:
+#     nike_men_hoodie_features = pickle.load(f)
 
 
 def getScores(img_url=None, img_path=None):
@@ -84,7 +85,10 @@ def rent():
     #getScores(img_path=path)
     packets = []
     for i in range(2,6):
-        packets.append({'url': f'../static/denim-data/denim{i}.jpeg', 'location': location[i-1]})
+        packets.append({'url': f'../static/denim-data/denim{i}.jpeg', 
+                        'location': location[i-1],
+                        'name': names[i-2]
+                        })
     return render_template('list.html',
                             packets = packets)
 
