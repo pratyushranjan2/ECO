@@ -68,43 +68,45 @@
             </div>
         </div>
 
-        <div class="right-col2">
+        <div class="right-col">
             <p style="font-weight: bold; color: darkgray; font-family:Arial, Helvetica, sans-serif; font-size: 20px;">Didn't find your size?</p>
             <p style="font-weight: bold; color: darkgray; font-family: Arial, Helvetica, sans-serif; font-size: 20px; margin-top: 5px;">Find similar results.</p>
-            {% for packet in packets %}
-            <div class="post">
-                <div class="info">
-                    <div class="user">
-                        <div class="profile-pic"><img src="../static/img/cover7.png" alt=""></div>
-                        <p class="username">modern_web_channel</p>
+            <div class="left-col2" style="margin-top: 15px;">
+                {% for packet in packets %}
+                <div class="post">
+                    <div class="info">
+                        <div class="user">
+                            <div class="profile-pic"><img src="../static/img/cover7.png" alt=""></div>
+                            <p class="username">{{packet['name']}}</p>
+                        </div>
+                        <img src="../static/img/option.PNG" class="options" alt="">
                     </div>
-                    <img src="../static/img/option.PNG" class="options" alt="">
-                </div>
-                <img src="{{ packet['url'] }}" class="post-image" alt="" style="cursor: pointer;">
-                <div class="post-content">
-                    <!-- <div class="reaction-wrapper">
-                        <img src="../static/img/like.PNG" class="icon" alt="">
-                        <img src="../static/img/comment.PNG" class="icon" alt="">
-                        <img src="../static/img/send.PNG" class="icon" alt="">
-                        <form action="/rent" method="POST" class="icon">
-                            <input type="hidden" name="param" value="cost">
-                            <input type="image" src="../static/img/coown.png" class="icon">
-                        </form>
-                        <img src="../static/img/save.PNG" class="save icon" alt="">
+                    <img src="{{ packet['url'] }}" class="post-image2" alt="" style="cursor: pointer;">
+                    <div class="post-content">
+                        <!-- <div class="reaction-wrapper">
+                            <img src="../static/img/like.PNG" class="icon" alt="">
+                            <img src="../static/img/comment.PNG" class="icon" alt="">
+                            <img src="../static/img/send.PNG" class="icon" alt="">
+                            <form action="/rent" method="POST" class="icon">
+                                <input type="hidden" name="param" value="cost">
+                                <input type="image" src="../static/img/coown.png" class="icon">
+                            </form>
+                            <img src="../static/img/save.PNG" class="save icon" alt="">
+                        </div> -->
+                        <p class="garment-cost">Rs 300</p>
+                        <p class="garment-type">{{packet['location']}}</p>
+                        <!-- <button class="button-figma">Co-own now!</button> -->
+                        <!-- <p class="description"><span>username </span> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Pariatur tenetur veritatis placeat, molestiae impedit aut provident eum quo natus molestias?</p>
+                        <p class="post-time">2 minutes ago</p> -->
+                    </div>
+                    <!-- <div class="comment-wrapper">
+                        <img src="../static/img/smile.PNG" class="icon" alt="">
+                        <input type="text" class="comment-box" placeholder="Add a comment">
+                        <button class="comment-btn">post</button>
                     </div> -->
-                    <p class="garment-cost">Rs 300</p>
-                    <p class="garment-type">{{packet['location']}}</p>
-                    <!-- <button class="button-figma">Co-own now!</button> -->
-                    <!-- <p class="description"><span>username </span> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Pariatur tenetur veritatis placeat, molestiae impedit aut provident eum quo natus molestias?</p>
-                    <p class="post-time">2 minutes ago</p> -->
                 </div>
-                <!-- <div class="comment-wrapper">
-                    <img src="../static/img/smile.PNG" class="icon" alt="">
-                    <input type="text" class="comment-box" placeholder="Add a comment">
-                    <button class="comment-btn">post</button>
-                </div> -->
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
 
         <!-- <div class="right-sub-col">

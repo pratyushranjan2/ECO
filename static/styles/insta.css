@@ -208,6 +208,12 @@ body{
     object-fit: contain;
 }
 
+.post-image2{
+    width: 100%;
+    height: 500px;
+    object-fit: fill;
+}
+
 .post-content{
     width: 100%;
     padding: 20px;
@@ -416,8 +422,8 @@ ul.scrollable-images {
 .left-col2{
     display: flex;
     flex-direction: column;
-    position: fixed;
-    top: 0;
+    overflow-y: auto;
+    height: 600px;
 }
 
 .right-col2{
