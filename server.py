@@ -78,8 +78,8 @@ def getScores(img_url=None, img_path=None):
 
 @app.route('/rent', methods=['POST'])
 def rent():
-    path = request.form.get('path')
-    print(f'rent request on {path}')
+    # path = request.form.get('path')
+    # print(f'rent request on {path}')
     sleep(1)
     #getScores(img_path=path)
     packets = []
