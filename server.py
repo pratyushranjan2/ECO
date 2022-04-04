@@ -1,3 +1,4 @@
+from time import sleep
 from PIL import Image
 from feature_extractor import FeatureExtractor
 from datetime import datetime
@@ -13,15 +14,15 @@ from detection.utils_my import Read_Img_2_Tensor, Save_Image, Load_DeepFashion2_
 
 app = Flask(__name__)
 
-fe = FeatureExtractor()
-model = Load_DeepFashion2_Yolov3()
+#fe = FeatureExtractor()
+#model = Load_DeepFashion2_Yolov3()
 max_matches = 6
 packets = []
 uploaded_img_path = None
 
 meta_hoodie = ['S M L', 'S M', 'M L', 'S M L XL', 'L', 'S M L']
 meta_footwear = ['6 7 8 9 10', '8 9 10', '6 7 8', '8', '6 10', '11']
-location = ['Hyderabad', 'Hyderabad', 'Bangalore', 'Pune', 'Bangalore', 'Pune']
+location = ['Phase-1 Electronic City Bangalore', 'HSR Layout Bangalore', 'Chandapura Bangalore', 'Kormangala Bangalore', 'BTM Layout Bangalore', 'Venkatapura Bangalore']
 costs = ['\u20B9 300','\u20B9 400','\u20B9 350','\u20B9 450','\u20B9 250','\u20B9 300',]
 rating = [4, 5, 4, 3, 4, 4]
 
@@ -31,11 +32,15 @@ with open('nike_men_hoodie_features.pkl', 'rb') as f:
     nike_men_hoodie_features = pickle.load(f)
 
 
-def getScores(img_url):
+def getScores(img_url=None, img_path=None):
     global uploaded_img_path
     global packets
-    response = requests.get(img_url)
-    img = Image.open(BytesIO(response.content))
+    if img_url:
+        response = requests.get(img_url)
+        img = Image.open(BytesIO(response.content))
+    else:
+        img = Image.open(img_path)
+    
     uploaded_img_path = "static/uploaded/" + datetime.now().isoformat().replace(":", ".") + "_" + 'sample.jpg'
     img.save(uploaded_img_path)
 
@@ -70,6 +75,18 @@ def getScores(img_url):
                             'location': location[i],
                             'rating': rating[i]
                             })
+
+@app.route('/rent', methods=['POST'])
+def rent():
+    path = request.form.get('path')
+    print(f'rent request on {path}')
+    sleep(1)
+    #getScores(img_path=path)
+    packets = []
+    for i in range(2,6):
+        packets.append({'url': f'../static/denim-data/denim{i}.jpeg', 'location': location[i-1]})
+    return render_template('list.html',
+                            packets = packets)
 
 @app.route('/sort', methods=['POST'])
 def sort():
@@ -111,28 +128,29 @@ def searchByUrl():
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    if request.method == 'POST':
-        vals = [request.form.get('query_img_url0'), request.form.get('query_img_url1'), request.form.get('query_img_url2')]
-        if (vals[0] is not None):
-            img_url = vals[0]
-            hoodie = False
-        elif (vals[1] is not None):
-            img_url = vals[1]
-            hoodie = False
-        else:
-            img_url = vals[2]
-            hoodie = True
+    # if request.method == 'POST':
+    #     vals = [request.form.get('query_img_url0'), request.form.get('query_img_url1'), request.form.get('query_img_url2')]
+    #     if (vals[0] is not None):
+    #         img_url = vals[0]
+    #         hoodie = False
+    #     elif (vals[1] is not None):
+    #         img_url = vals[1]
+    #         hoodie = False
+    #     else:
+    #         img_url = vals[2]
+    #         hoodie = True
 
-        getScores(img_url)
-        meta = meta_hoodie if hoodie else meta_footwear
+    #     getScores(img_url)
+    #     meta = meta_hoodie if hoodie else meta_footwear
 
-        return render_template('card2.html',
-                               query_path=uploaded_img_path,
-                               packets=packets
-                               )
+    #     return render_template('insta.html',
+    #                            query_path=uploaded_img_path,
+    #                            packets=packets
+    #                            )
 
-    else:
-        return render_template('card2.html')
+    # else:
+    #     return render_template('card2.html')
+    return render_template('insta.html')
 
 
 if __name__=="__main__":

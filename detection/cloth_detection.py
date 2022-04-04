@@ -53,12 +53,12 @@ def Detect_Clothes_and_Crop(img_tensor, model, threshold=0.5):
     img_height = img.shape[0]
 
     # crop out one cloth
-    # for obj in list_obj:
-    #     if obj['label'] == 'short_sleeve_top' and obj['confidence']>threshold:
-    #         img_crop = img[int(obj['y1']*img_height):int(obj['y2']*img_height), int(obj['x1']*img_width):int(obj['x2']*img_width), :]
+    for obj in list_obj:
+        if obj['label'] in ['short_sleeve_top', 'long_sleeve_top', 'short_sleeve_outwear', 'long_sleeve_outwear']:
+            img_crop = img[int(obj['y1']*img_height):int(obj['y2']*img_height), int(obj['x1']*img_width):int(obj['x2']*img_width), :]
 
-    obj = list_obj[0]
-    img_crop = img[int(obj['y1']*img_height):int(obj['y2']*img_height), int(obj['x1']*img_width):int(obj['x2']*img_width), :]
+    # obj = list_obj[0]
+    # img_crop = img[int(obj['y1']*img_height):int(obj['y2']*img_height), int(obj['x1']*img_width):int(obj['x2']*img_width), :]
     return (img_crop, True)
 
 if __name__ == '__main__':
